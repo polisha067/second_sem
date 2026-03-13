@@ -1,0 +1,23 @@
+from file_source import FileSource
+from generator_source import GeneratorSource
+from task_source import TaskSource
+from logger import log
+
+sources = [
+    FileSource("data.json"),
+    GeneratorSource(3),
+    FileSource("bad.json"),
+    GeneratorSource(0),
+]
+
+log.info("start")
+for src in sources:
+    print(f"\n{src.name}")
+    if not isinstance(src, TaskSource):
+        log.error(f"not a source: {type(src).__name__}")
+        print("not a source")
+        continue
+    tasks = list(src.get_tasks())
+    print(f"{len(tasks)} tasks")
+    log.info(f"ok: {src.name} - {len(tasks)} tasks")
+log.info("end")
