@@ -1,19 +1,19 @@
 # second_sem
 ## лабораторная работа 1
 
-├── src/        
-│   ├── file_source.py       # источник из файлов  
-│   ├── generator_source.py  # источник генератор     
-│   ├── logger.py            # логггировние
-│   ├── task_source.py       # контракт
-│   ├── task.py              # модель задач
-│   ├── main.py              #запуск   
-├── test/  
-│   ├── test_file_source.py
-│   ├── tets_generator_source.py
-│   ├── test_protocol.py
-│   ├── tets_task.py
-├── polisha.log              # файл с записью логов
+ ├── src/        
+ │   ├── file_source.py       # источник из файлов  
+ │   ├── generator_source.py  # источник генератор     
+ │   ├── logger.py            # логггировние
+ │   ├── task_source.py       # контракт
+ │   ├── task.py              # модель задач
+ │   ├── main.py              #запуск   
+ ├── test/  
+ │   ├── test_file_source.py
+ │   ├── tets_generator_source.py
+ │   ├── test_protocol.py
+ │   ├── tets_task.py
+ ├── polisha.log              # файл с записью логов
 
 # что и как происходит
 
@@ -38,7 +38,7 @@
 ошибки тоже логируются
 видно, что происходит каждый шаг программы
 
-- работа 
+# работа 
 запускаем программу 
 чтение файла(создание 3х задач из файла)
 для источников: проверяем, что источник. пишем имя источника. получаем задачи. считаем кол-во.  выводим резульатт
