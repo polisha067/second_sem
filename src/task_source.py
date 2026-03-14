@@ -1,5 +1,5 @@
 from typing import Protocol, runtime_checkable, Iterable
-from task import Task
+from src.task import Task
 
 @runtime_checkable
 class TaskSource(Protocol):

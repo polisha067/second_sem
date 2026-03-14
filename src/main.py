@@ -1,7 +1,7 @@
-from file_source import FileSource
-from generator_source import GeneratorSource
-from task_source import TaskSource
-from logger import log
+from src.file_source import FileSource
+from src.generator_source import GeneratorSource
+from src.task_source import TaskSource
+from src.logger import log
 
 sources = [
     FileSource("data.json"),

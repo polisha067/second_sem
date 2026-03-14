@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 from typing import Iterable
-from task import Task
-from task_source import TaskSource
-from logger import log
+from src.task import Task
+from src.task_source import TaskSource
+from src.logger import log
 
 class FileSource:
     def __init__(self, path: str):
