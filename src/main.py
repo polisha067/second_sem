@@ -1,4 +1,4 @@
-from task import Task
+from src.task import Task
 
 def main():
 
@@ -21,4 +21,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-    

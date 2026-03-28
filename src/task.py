@@ -1,6 +1,6 @@
 from datetime import datetime
-from logger import log
-from descriptors import IDDescriptor,DescriptionDescriptor,PriorityDescriptor,StatusDescriptor
+from src.logger import log
+from src.descriptors import IDDescriptor,DescriptionDescriptor,PriorityDescriptor,StatusDescriptor
 
 
 class Task:

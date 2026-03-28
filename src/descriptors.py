@@ -1,5 +1,5 @@
-from logger import log
-from exceptions import IDError, DeskriptionError, PrioraError, StatusError
+from src.logger import log
+from src.exceptions import IDError, DeskriptionError, PrioraError, StatusError
 
 
 class IDDescriptor:
@@ -24,7 +24,7 @@ class IDDescriptor:
         
         if value <= 0:
             log.error(f"id должен быть > 0, получен {value}")
-            
+
             raise IDError(f"id должен быть > 0, получен {value}")
         setattr(obj, self.store, value)
 
