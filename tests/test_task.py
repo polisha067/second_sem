@@ -49,3 +49,17 @@ def test_readiness():
     assert t.readiness_to_perform == True
     t.status = "running"
     assert t.readiness_to_perform == False
+
+def test_very_long_description():
+    long_text = "а" * 1000
+    t = Task(1, long_text, 3)
+    assert t.deskriptor == long_text
+
+def test_priority_invalid_type():
+    with pytest.raises(PrioraError):
+        Task(1, "текст", "3")
+
+def test_priority_changes():
+    t = Task(1, "текст", 3)
+    t.priority = 5
+    assert t.priority == 5
