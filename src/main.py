@@ -2,12 +2,14 @@ from src.file_source import FileSource
 from src.generator_source import GeneratorSource
 from src.task_source import TaskSource
 from src.logger import log
+from src.api_source import APISource
 
 def main():
 
     sources = [
         FileSource("data.json"),
         GeneratorSource(3),
+        APISource("https://api.example.com/tasks"),
         FileSource("bad.json"),
         GeneratorSource(0),
     ]
