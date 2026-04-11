@@ -7,6 +7,7 @@ def test_file_not_found():
     source = FileSource("no.json")
     assert len(list(source.get_tasks())) == 0
 
+
 def test_file_reads_tasks(tmp_path):
 
     file = tmp_path / "dt.json"
@@ -17,3 +18,25 @@ def test_file_reads_tasks(tmp_path):
     
     assert len(tasks) == 1
     assert tasks[0].payload == "task1"
+
+
+def test_file_corrupted(tmp_path):
+
+    file = tmp_path / "corrupt.json"
+    file.write_text("this is not json")
+    
+    source = FileSource(str(file))
+    tasks = list(source.get_tasks())
+    
+    assert len(tasks) == 0
+
+
+def test_file_bad_format(tmp_path):
+
+    file = tmp_path / "bad.json"
+    file.write_text('[{"id": 1, "wrong": "field"}]')
+    
+    source = FileSource(str(file))
+    tasks = list(source.get_tasks())
+    
+    assert len(tasks) == 0
