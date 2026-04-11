@@ -1,22 +1,34 @@
-from src.task import Task
+from src.file_source import FileSource
+from src.generator_source import GeneratorSource
+from src.api_source import APISource
+from src.task_source import TaskSource
+from src.logger import log
 
 def main():
 
-    task_id = int(input("id: "))
-    desc = input("описание: ")
-    priority = int(input("приоритет (1-5): "))
+    sources = [
+        FileSource("data.json"),
+        GeneratorSource(3),
+        APISource("https://api.example.com/tasks"),
+        FileSource("bad.json"),
+        GeneratorSource(0),
+    ]
 
-    t = Task(task_id, desc, priority)
-    print(t)
+    log.info("start")
+    for src in sources:
+        print(f"\n{src.name}")
 
-    answer = input("менять статус? (y/n): ")
-    if answer.lower() == "y":
-        new_status = input("новый статус (pending/running/completed/failed): ")
-        t.status = new_status
-        print(f"статус изменен: {t.status}")
-        print(t)
-    else:
-        print("статус не изменен")
+        if not isinstance(src, TaskSource):
+            log.error(f"not a source: {type(src).__name__}")
+            print("not a source")
+            continue
+        tasks = list(src.get_tasks())
+        print(f"{len(tasks)} tasks")
+        
+        for t in tasks:
+            print(f"   {t}")
+        log.info(f"ok: {src.name} - {len(tasks)} tasks")
+    log.info("end")
 
 
 if __name__ == "__main__":

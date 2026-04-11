@@ -12,9 +12,10 @@ class Task:
     status = StatusDescriptor()
 
 
-    def __init__(self, task_id: int, description: str, priority: int = 3):
+    def __init__(self, task_id: int, description: str, priority: int = 3, logger= None):
             
-            log.debug(f"создан таск: id = {task_id}")
+            self.logger = logger or log
+            self.logger.debug(f"создан таск: id = {task_id}")
 
             self.id = task_id
             self.deskriptor = description
@@ -22,7 +23,7 @@ class Task:
             self.status = "pending"
             self.created_at = datetime.now()
         
-            log.info(f"таск {self.id} создан, приоритет={priority}")
+            self.logger.info(f"таск {self.id} создан, приоритет={priority}")
 
      
     @property
