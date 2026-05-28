@@ -5,7 +5,11 @@
     ├── src/         
     │   ├── main.py        #запуск 
     │   ├── task.py        
-    │   ├── descriptors.py       
+    │   ├── file_source.py
+    │   ├── descriptors.py
+    │   ├── api_source.py
+    │   ├── generator_source.py
+    │   ├── task_source.py
     │   ├── exceptions.py  
     │   ├── logger.py 
     │   ├── task_queue.py  #очередь задач      
