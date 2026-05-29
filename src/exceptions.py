@@ -14,3 +14,5 @@ class StatusError(TaskError): #ошибка статуса
 class PrioraError(TaskError): #ошибка приоритета
     pass
 
+class ExecutorError(TaskError):
+    pass

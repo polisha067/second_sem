@@ -1,9 +1,41 @@
 from src.api_source import APISource
+from src.async_executor import AsyncExecutor
+from src.async_task_queue import AsyncTaskQueue
+from src.async_task_runner import AsyncTaskRunner
 from src.file_source import FileSource
 from src.generator_source import GeneratorSource
+from src.handlers import SleepHandler
 from src.task import Task
 from src.task_queue import TaskQueue
 from src.task_source import TaskSource
+
+runner = None
+executor = None
+async_queue = None
+
+def ensure_async():
+    global runner, executor, async_queue
+
+    if runner is None:
+        async_queue = AsyncTaskQueue()
+        executor = AsyncExecutor(async_queue, SleepHandler())
+        runner = AsyncTaskRunner()
+        runner.start()
+        runner.submit(executor.worker())
+        print("async-runner запущен")
+
+    return runner, executor, async_queue
+
+
+async def enqueue_task(q, task):
+    await q.put(task)
+
+
+async def enqueue_many(q, tasks):
+    for t in tasks:
+        await q.put(t)
+    await q.join()
+
 
 def main():
     queue = TaskQueue()
@@ -17,6 +49,9 @@ def main():
         print("5) фильтр по приоритету")
         print("6) изменить статус задачи по id")
         print("7) удалить задачу по id")
+        print("8) запустить обработку одной pending задачи")
+        print("9) запустить обработку всех pending")
+        print("10) остановить исполнитель")
         print("0) выход")
         print(f"в очереди: {len(queue)} задач")
 
@@ -104,7 +139,7 @@ def main():
 
 
         if choice == "4":
-            status = input("status (pending/running/done...): ").strip()
+            status = input("status (pending/running/completed...): ").strip()
 
             if not status:
                 print("status не должен быть пустым")
@@ -161,6 +196,59 @@ def main():
             task_id = int(raw_id)
             ok = queue.remove(task_id)
             print("ok" if ok else "не найдено")
+            continue
+
+
+        if choice == "8":
+            pending = list(queue.pending_tasks())
+
+            if not pending:
+                print("нет pending задач")
+                continue
+
+            task = pending[0]
+            r, ex, aq = ensure_async()
+            r.submit(enqueue_task(aq, task))
+            print(f"задача {task.id} в async-очереди")
+            continue
+
+
+        if choice == "9":
+            pending = list(queue.pending_tasks())
+
+            if not pending:
+                print("нет pending задач")
+                continue
+
+            r, ex, aq = ensure_async()
+            fut = r.submit(enqueue_many(aq, pending))
+
+            def done_cb(f):
+                try:
+                    f.result()
+                    print("все pending обработаны")
+                except Exception as e:
+                    print("ошибка:", e)
+
+            fut.add_done_callback(done_cb)
+            print(f"отправлено: {len(pending)}")
+            continue
+
+
+        if choice == "10":
+            global runner, executor, async_queue
+
+            if runner is None:
+                print("runner не запущен")
+                continue
+
+            if executor is not None:
+                executor.stop()
+            runner.stop()
+            runner = None
+            executor = None
+            async_queue = None
+            print("async-runner остановлен")
             continue
 
         print("неизвестная команда")
