@@ -23,6 +23,6 @@
     ├── test/  
     │   ├── ├── test_task_queue.py   #тесты для очереди
     │   ├── ├── test_integration.py  #интеграционные тесты
-│   ├── data.json
+    │   ├── data.json
 
 
