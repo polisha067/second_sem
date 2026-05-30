@@ -4,26 +4,30 @@
 
     ├── src/         
     │   ├── main.py               #запуск 
-    │   ├── api_source.py         
+    │   ├── api_source.py         #источник задач - заглушка API
     │   ├── async_executor.py     #асинхронный исполнитель 
     │   ├── async_task_queue.py   #асинхронная очередь
     │   ├── async_task_runner.py  #event loop в фоновом потоке
-    │   ├── dependencies.py       #заглуш
+    │   ├── dependencies.py       #заглушки зависимостей
     │   ├── task.py               #модель задачи
-    │   ├── descriptors.py       
+    │   ├── descriptors.py        #дескрипторы валидации атрибутов
     │   ├── exceptions.py         #исключения
     │   ├── executor_resource.py  #контекстный менеджер
-    │   ├── file_source.py
-    │   ├── generator_source.py
+    │   ├── file_source.py        #источник задач из JSON-файла
+    │   ├── generator_source.py   #источник задач - генератор
     │   ├── handlers.py           #обработчик
-    │   ├── logger.py 
+    │   ├── logger.py             #логгер
     │   ├── task_handler.py       #протокол обработчика
-    │   ├── task_source.py
-    │   ├── task_queue.py  #очередь задач      
-    ├── test/  
-    │   ├── ├── test_task_queue.py   #тесты для очереди
-    │   ├── ├── test_integration.py  #интеграционные тесты
-    │   ├── data.json
+    │   ├── task_source.py        #протокол источника задач
+    │   ├── task_queue.py         #очередь задач      
+    ├── tests/  
+    │   ├── ├── test_task_queue.py         #тесты для очереди
+    │   ├── ├── test_integration.py        #интеграционные тесты
+    │   ├── ├── test_handlers.py           #тесты обработчика SleepHandler
+    │   ├── ├── test_executor_resource.py  #тесты асинхронного контекстного менеджера
+    │   ├── ├── test_async_task_runner.py  #тесты запуска event loop в фоновом потоке
+    │   ├── ├── test_async_task_queue.py   #тесты асинхронной очереди AsyncTaskQueue
+    │   ├── data.json                #данные для FileSource
 
 ## реализация требований
 ### асинхронная очередь задач
